@@ -1,26 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 
-class NewsContent extends StatelessWidget {
+class PlanContent extends StatelessWidget {
   final String title;
   final String img;
-  final String budget;
   final String description;
   final String ministerie;
-  final double progress;
   final String startDate;
-  final String endDate;
 
-  NewsContent({
+  PlanContent({
     this.title,
     this.img,
-    this.budget,
     this.description,
     this.ministerie,
-    this.progress,
     this.startDate,
-    this.endDate,
   });
 
   @override
@@ -80,36 +73,13 @@ class NewsContent extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'Budget: $budget\nMinisterie: $ministerie\nStart datum: $startDate\nEind datum: $endDate',
+                    'Ministerie: $ministerie\nStart datum: $startDate',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: size.width * 0.01,
                       letterSpacing: 2,
                       color: Colors.grey,
                     ),
-                  ),
-                ),
-                Divider(color: Colors.grey),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Huidige status:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: size.width * 0.01,
-                      letterSpacing: 2,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: LinearPercentIndicator(
-                    width: size.width * .20,
-                    lineHeight: size.height * .01,
-                    percent: progress,
-                    backgroundColor: Colors.grey,
-                    progressColor: Colors.red,
                   ),
                 ),
               ],

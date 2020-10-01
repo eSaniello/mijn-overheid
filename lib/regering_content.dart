@@ -1,26 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 
-class NewsContent extends StatelessWidget {
-  final String title;
+class RegeringContent extends StatelessWidget {
+  final String name;
   final String img;
-  final String budget;
-  final String description;
-  final String ministerie;
-  final double progress;
-  final String startDate;
-  final String endDate;
+  final int age;
+  final String functie;
 
-  NewsContent({
-    this.title,
+  RegeringContent({
+    this.name,
     this.img,
-    this.budget,
-    this.description,
-    this.ministerie,
-    this.progress,
-    this.startDate,
-    this.endDate,
+    this.age,
+    this.functie,
   });
 
   @override
@@ -54,7 +45,7 @@ class NewsContent extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    title,
+                    name,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: size.width * 0.015,
@@ -67,7 +58,7 @@ class NewsContent extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    description,
+                    'Leeftijd: $age',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: size.width * 0.01,
@@ -80,36 +71,13 @@ class NewsContent extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'Budget: $budget\nMinisterie: $ministerie\nStart datum: $startDate\nEind datum: $endDate',
+                    'Functie: $functie',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: size.width * 0.01,
                       letterSpacing: 2,
                       color: Colors.grey,
                     ),
-                  ),
-                ),
-                Divider(color: Colors.grey),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Huidige status:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: size.width * 0.01,
-                      letterSpacing: 2,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: LinearPercentIndicator(
-                    width: size.width * .20,
-                    lineHeight: size.height * .01,
-                    percent: progress,
-                    backgroundColor: Colors.grey,
-                    progressColor: Colors.red,
                   ),
                 ),
               ],

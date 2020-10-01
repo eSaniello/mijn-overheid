@@ -1,12 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:welvaart/home.dart';
-import 'package:welvaart/news_content.dart';
-import 'package:welvaart/news_item.dart';
 import 'package:intl/intl.dart';
-import 'package:welvaart/plannen.dart';
-
-import 'mededeling.dart';
+import 'package:welvaart/regering_content.dart';
+import 'package:welvaart/regering_item.dart';
+import 'home.dart';
+import 'plannen.dart';
+import 'transition.dart';
 
 class RegeringScreen extends StatefulWidget {
   @override
@@ -17,105 +17,244 @@ class RegeringScreenState extends State<RegeringScreen> {
   bool showContent = false;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  String title;
+  double itemHeight;
+
+  String name;
+  String functie;
+  String img;
+  int age;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
-            Row(
-              children: [
-                Container(
-                  height: size.height * 0.1,
-                  child: Text('REGERING'),
-                )
-              ],
+            Container(
+              color: Colors.white,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(width: size.width * 0.04),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Container(
+                          width: size.width * 0.12,
+                          child: CachedNetworkImage(
+                            fit: BoxFit.fitHeight,
+                            imageUrl: 'https://i.imgur.com/PcLJHqc.png',
+                            placeholder: (context, url) =>
+                                Image.asset('su.png'),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        DateFormat('LLL dd, yyyy').format(DateTime.now()),
+                        style: TextStyle(
+                          fontSize: size.width * 0.01,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey[800],
+                        ),
+                      ),
+                      Text(
+                        DateFormat('h:mm a').format(DateTime.now()),
+                        style: TextStyle(
+                          fontSize: size.width * 0.008,
+                          fontWeight: FontWeight.w200,
+                          color: Colors.grey[800],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: size.width * 0.05),
+                  Container(
+                    height: size.height * .15,
+                    child: CachedNetworkImage(
+                      fit: BoxFit.fitHeight,
+                      imageUrl:
+                          'https://www.iconfinder.com/data/icons/weather-color-2/500/weather-07-512.png',
+                      placeholder: (context, url) => Image.asset('su.png'),
+                    ),
+                  ),
+                  Text(
+                    'Good to see you :)',
+                    style: TextStyle(
+                      fontSize: size.width * 0.025,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[800],
+                    ),
+                  ),
+                ],
+              ),
             ),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    children: [
-                      SizedBox(height: 10),
-                      Container(
-                        width: size.width * .20,
-                        child: Text(DateTime.now().toString()),
-                      ),
-                      SizedBox(height: 10),
-                      FlatButton(
-                        minWidth: size.width * .20,
-                        child: Text('Home'),
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen()),
-                          );
-                        },
-                      ),
-                      SizedBox(height: 10),
-                      FlatButton(
-                        minWidth: size.width * .20,
-                        child: Text('Plannen'),
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PlanScreen()),
-                          );
-                          // setState(() {
-                          //   firestore.collection('projects').add({
-                          //     'name': 'random1221',
-                          //     'description':
-                          //         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare auctor libero, vitae tempus enim venenatis in. Mauris posuere id nibh sed accumsan. Maecenas non eros sed odio euismod suscipit. Praesent et imperdiet eros, vel elementum libero. Ut tristique metus id mi viverra, nec sollicitudin nunc faucibus. Maecenas sit amet rhoncus ipsum. Vestibulum malesuada neque eget neque dictum iaculis. Ut mollis rutrum luctus. Cras pharetra velit sed orci eleifend pharetra.',
-                          //     'budget': '\$10 mill',
-                          //     'ministerie': "Min van Financien",
-                          //     'progress': 7,
-                          //     'start_date': '02-03-2019',
-                          //     'end_date': '02-07-2022',
-                          //     'date_added': DateTime.now()
-                          //   });
-                          // });
-                        },
-                      ),
-                      SizedBox(height: 10),
-                      FlatButton(
-                        minWidth: size.width * .20,
-                        child: Text('Mededelingen'),
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MededelingenScreen()),
-                          );
-                        },
-                      ),
-                      SizedBox(height: 10),
-                      FlatButton(
-                        minWidth: size.width * .20,
-                        child: Text('De Regering'),
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RegeringScreen()),
-                          );
-                        },
-                      ),
-                    ],
+                  Container(
+                    color: Colors.white,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        FlatButton(
+                          hoverColor: Colors.grey[50],
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(width: size.width * .01),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.grey[50],
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Icon(
+                                      Icons.home,
+                                      color: Colors.grey[400],
+                                      size: size.width * 0.03,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: size.width * .02),
+                                Text(
+                                  'Start',
+                                  style: TextStyle(
+                                    fontSize: size.width * 0.025,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                SizedBox(width: size.width * .063),
+                                SizedBox(width: size.width * .005),
+                                SizedBox(width: size.width * .01),
+                              ],
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              ScaleRoute(page: HomeScreen()),
+                            );
+                          },
+                        ),
+                        FlatButton(
+                          hoverColor: Colors.grey[50],
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(width: size.width * .01),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.grey[50],
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Icon(
+                                      Icons.calendar_today,
+                                      color: Colors.grey[400],
+                                      size: size.width * 0.03,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: size.width * .02),
+                                Text(
+                                  'Plannen',
+                                  style: TextStyle(
+                                    fontSize: size.width * 0.025,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                SizedBox(width: size.width * .025),
+                                SizedBox(width: size.width * .005),
+                                SizedBox(width: size.width * .01),
+                              ],
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              ScaleRoute(page: PlanScreen()),
+                            );
+                          },
+                        ),
+                        FlatButton(
+                          hoverColor: Colors.grey[50],
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(width: size.width * .01),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.red,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Icon(
+                                      Icons.account_balance,
+                                      color: Colors.white,
+                                      size: size.width * 0.03,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: size.width * .02),
+                                Text(
+                                  'Regering',
+                                  style: TextStyle(
+                                    fontSize: size.width * 0.025,
+                                    color: Colors.grey[800],
+                                  ),
+                                ),
+                                SizedBox(width: size.width * .015),
+                                CircleAvatar(
+                                  backgroundColor: Colors.red,
+                                  radius: size.width * 0.005,
+                                ),
+                                SizedBox(width: size.width * .01),
+                              ],
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              ScaleRoute(page: RegeringScreen()),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                  SizedBox(width: 5),
+                  SizedBox(
+                    width: size.width * 0.009,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(50),
+                        ),
+                        color: Colors.grey[50],
+                      ),
+                    ),
+                  ),
                   Expanded(
                     child: StreamBuilder(
                         stream: firestore
                             .collection('regering')
-                            .orderBy('date_added', descending: false)
+                            .orderBy('date_added', descending: true)
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -124,42 +263,99 @@ class RegeringScreenState extends State<RegeringScreen> {
                               child: LinearProgressIndicator(),
                             );
                           }
-                          return ListView(
-                            children: snapshot.data.docs.map((document) {
-                              return InkWell(
-                                hoverColor: Colors.white12,
-                                onTap: () {
-                                  setState(() {
-                                    showContent = true;
-                                    DateTime d = DateTime.parse(document
-                                        .data()['date_added']
-                                        .toDate()
-                                        .toString());
-                                    title = DateFormat('yyyy-MM-dd - kk:mm')
-                                        .format(d);
-                                  });
-                                },
-                                child: NewsItem(
-                                  title: document.data()['name'],
-                                  widht: size.width * .50,
-                                  height: size.height * .20,
-                                ),
-                              );
-                            }).toList(),
+                          return Container(
+                            color: Colors.grey[50],
+                            child: ListView(
+                              physics: BouncingScrollPhysics(),
+                              children: snapshot.data.docs.map((document) {
+                                return AnimatedContainer(
+                                  curve: Curves.easeIn,
+                                  height: itemHeight == null
+                                      ? size.height * .25
+                                      : itemHeight,
+                                  duration: Duration(milliseconds: 300),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: size.height * .015,
+                                      horizontal: size.width * .005,
+                                    ),
+                                    child: InkWell(
+                                      onHover: (m) {
+                                        if (m) {
+                                          setState(() {
+                                            itemHeight = size.height * .30;
+                                          });
+                                        } else {
+                                          setState(() {
+                                            itemHeight = size.height * .25;
+                                          });
+                                        }
+                                      },
+                                      splashColor: Colors.red,
+                                      borderRadius: BorderRadius.circular(25),
+                                      hoverColor: Colors.white12,
+                                      onTap: () {
+                                        setState(() {
+                                          showContent = true;
+
+                                          name = document.data()['name'];
+                                          img = document.data()['img'];
+                                          functie = document.data()['functie'];
+                                          age = document.data()['age'];
+                                        });
+                                      },
+                                      child: RegeringItem(
+                                        img: document.data()['img'],
+                                        name: document.data()['name'],
+                                        functie: document.data()['functie'],
+                                        dateAdded:
+                                            document.data()['date_added'],
+                                        widht: size.width * .40,
+                                        height: size.height * .25,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           );
                         }),
                   ),
-                  SizedBox(width: size.width * .01),
+                  SizedBox(
+                    width: size.width * .001,
+                    child: Container(
+                      color: Colors.grey[50],
+                    ),
+                  ),
                   Column(
                     children: [
-                      NewsContent(
-                        title: showContent ? '$title' : " ",
-                        widht: showContent ? size.width * .30 : 0,
-                        height: showContent ? size.height * .90 : 0,
+                      AnimatedContainer(
+                        curve: Curves.bounceInOut,
+                        duration: Duration(milliseconds: 150),
+                        width: showContent ? size.width * .30 : 0,
+                        height: showContent ? size.height * .805 : 0,
+                        color: Colors.grey[50],
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: size.height * .015,
+                            bottom: size.height * .02,
+                          ),
+                          child: RegeringContent(
+                            name: showContent ? '$name' : " ",
+                            functie: showContent ? '$functie' : " ",
+                            img: showContent ? '$img' : " ",
+                            age: showContent ? age : 0,
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                  SizedBox(width: size.width * .01),
+                  SizedBox(
+                    width: size.width * .01,
+                    child: Container(
+                      color: Colors.grey[50],
+                    ),
+                  ),
                 ],
               ),
             ),

@@ -3,23 +3,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class NewsItem extends StatelessWidget {
-  final String title;
-  final String budget;
+class RegeringItem extends StatelessWidget {
+  final String name;
+  final String functie;
   final double widht;
   final double height;
   final String img;
   final Timestamp dateAdded;
-  final String description;
 
-  NewsItem({
-    this.title,
+  RegeringItem({
+    this.name,
+    this.img,
+    this.functie,
     this.widht,
     this.height,
-    this.img,
-    this.budget,
     this.dateAdded,
-    this.description,
   });
 
   @override
@@ -59,7 +57,7 @@ class NewsItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    name,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: size.width * 0.015,
@@ -70,7 +68,7 @@ class NewsItem extends StatelessWidget {
                     child: Container(
                       width: size.width * .20,
                       child: Text(
-                        description,
+                        functie,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -83,7 +81,7 @@ class NewsItem extends StatelessWidget {
                   ),
                   SizedBox(height: size.height * 0.02),
                   Text(
-                    'Budget: $budget    date: $date',
+                    'date: $date',
                     style: TextStyle(
                       fontWeight: FontWeight.w300,
                       fontSize: size.width * 0.01,

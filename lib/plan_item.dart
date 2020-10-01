@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class NewsItem extends StatelessWidget {
+class PlanItem extends StatelessWidget {
   final String title;
   final String budget;
   final double widht;
@@ -12,7 +12,7 @@ class NewsItem extends StatelessWidget {
   final Timestamp dateAdded;
   final String description;
 
-  NewsItem({
+  PlanItem({
     this.title,
     this.widht,
     this.height,
