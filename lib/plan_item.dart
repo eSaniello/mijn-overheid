@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 
 class PlanItem extends StatelessWidget {
   final String title;
-  final String budget;
   final double widht;
   final double height;
   final String img;
@@ -17,7 +16,6 @@ class PlanItem extends StatelessWidget {
     this.widht,
     this.height,
     this.img,
-    this.budget,
     this.dateAdded,
     this.description,
   });
@@ -83,7 +81,7 @@ class PlanItem extends StatelessWidget {
                   ),
                   SizedBox(height: size.height * 0.02),
                   Text(
-                    'Budget: $budget    date: $date',
+                    'date: $date',
                     style: TextStyle(
                       fontWeight: FontWeight.w300,
                       fontSize: size.width * 0.01,
