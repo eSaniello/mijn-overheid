@@ -26,9 +26,12 @@ dependencies:
 
   cloud_firestore:
   intl:
-  flutter_neumorphic:
   percent_indicator:
   cached_network_image:
+  firebase_auth:
+  google_sign_in:
+  provider:
+  flutter_auth_buttons:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

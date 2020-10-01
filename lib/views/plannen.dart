@@ -1,31 +1,31 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:welvaart/news_content.dart';
-import 'package:welvaart/news_item.dart';
 import 'package:intl/intl.dart';
-import 'package:welvaart/plannen.dart';
-import 'package:welvaart/transition.dart';
+import 'package:welvaart/services/firebase_auth_service.dart';
+import 'package:welvaart/views/plan_item.dart';
+import 'home.dart';
+import 'plan_content.dart';
 import 'regering.dart';
+import 'transition.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class PlanScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  PlanScreenState createState() => PlanScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class PlanScreenState extends State<PlanScreen> {
   bool showContent = false;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   double itemHeight;
 
   String title;
-  String img;
-  String budget;
   String description;
+  String img;
   String ministerie;
-  double progress;
   String startDate;
-  String endDate;
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +93,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: Colors.grey[800],
                     ),
                   ),
+                  SizedBox(width: size.width * .40),
+                  FlatButton(
+                    onPressed: () {
+                      context.read<FirebaseAuthService>().signOut();
+                    },
+                    child: Text(
+                      'Uitloggen',
+                      style: TextStyle(
+                        color: Colors.grey[800],
+                        fontSize: size.width * .01,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -118,13 +131,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
-                                    color: Colors.red,
+                                    color: Colors.grey[50],
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(3.0),
                                     child: Icon(
                                       Icons.home,
-                                      color: Colors.white,
+                                      color: Colors.grey[400],
                                       size: size.width * 0.03,
                                     ),
                                   ),
@@ -134,14 +147,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   'Start',
                                   style: TextStyle(
                                     fontSize: size.width * 0.025,
-                                    color: Colors.grey[800],
+                                    color: Colors.grey,
                                   ),
                                 ),
                                 SizedBox(width: size.width * .063),
-                                CircleAvatar(
-                                  backgroundColor: Colors.red,
-                                  radius: size.width * 0.005,
-                                ),
+                                SizedBox(width: size.width * .005),
                                 SizedBox(width: size.width * .01),
                               ],
                             ),
@@ -164,13 +174,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
-                                    color: Colors.grey[50],
+                                    color: Colors.red,
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(3.0),
                                     child: Icon(
                                       Icons.calendar_today,
-                                      color: Colors.grey[400],
+                                      color: Colors.white,
                                       size: size.width * 0.03,
                                     ),
                                   ),
@@ -180,11 +190,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   'Plannen',
                                   style: TextStyle(
                                     fontSize: size.width * 0.025,
-                                    color: Colors.grey,
+                                    color: Colors.grey[800],
                                   ),
                                 ),
                                 SizedBox(width: size.width * .025),
-                                SizedBox(width: size.width * .005),
+                                CircleAvatar(
+                                  backgroundColor: Colors.red,
+                                  radius: size.width * 0.005,
+                                ),
                                 SizedBox(width: size.width * .01),
                               ],
                             ),
@@ -227,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 SizedBox(width: size.width * .015),
-                                SizedBox(width: size.width * 0.005),
+                                SizedBox(width: size.width * .005),
                                 SizedBox(width: size.width * .01),
                               ],
                             ),
@@ -256,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Expanded(
                     child: StreamBuilder(
                         stream: firestore
-                            .collection('projects')
+                            .collection('plans')
                             .orderBy('date_added', descending: true)
                             .snapshots(),
                         builder: (BuildContext context,
@@ -303,24 +316,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                           title = document.data()['name'];
                                           img = document.data()['img'];
-                                          budget = document.data()['budget'];
                                           description =
                                               document.data()['description'];
                                           ministerie =
                                               document.data()['ministerie'];
-                                          progress =
-                                              document.data()['progress'];
                                           startDate =
                                               document.data()['start_date'];
-                                          endDate = document.data()['end_date'];
                                         });
                                       },
-                                      child: NewsItem(
+                                      child: PlanItem(
+                                        docId: document.id,
                                         img: document.data()['img'],
                                         title: document.data()['name'],
                                         description:
                                             document.data()['description'],
-                                        budget: document.data()['budget'],
                                         dateAdded:
                                             document.data()['date_added'],
                                         widht: size.width * .40,
@@ -346,22 +355,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         curve: Curves.bounceInOut,
                         duration: Duration(milliseconds: 150),
                         width: showContent ? size.width * .30 : 0,
-                        height: showContent ? size.height * .805 : 0,
+                        height: showContent ? size.height * .80 : 0,
                         color: Colors.grey[50],
                         child: Padding(
                           padding: EdgeInsets.only(
                             top: size.height * .015,
                             bottom: size.height * .02,
                           ),
-                          child: NewsContent(
+                          child: PlanContent(
                             title: showContent ? '$title' : " ",
-                            budget: showContent ? '$budget' : " ",
                             description: showContent ? '$description' : " ",
                             img: showContent ? '$img' : " ",
                             startDate: showContent ? '$startDate' : " ",
-                            endDate: showContent ? '$endDate' : " ",
                             ministerie: showContent ? '$ministerie' : " ",
-                            progress: showContent ? progress : 0.0,
                           ),
                         ),
                       ),

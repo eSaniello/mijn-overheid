@@ -2,11 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:welvaart/regering_content.dart';
-import 'package:welvaart/regering_item.dart';
+import 'package:welvaart/services/firebase_auth_service.dart';
 import 'home.dart';
 import 'plannen.dart';
+import 'regering_content.dart';
+import 'regering_item.dart';
 import 'transition.dart';
+import 'package:provider/provider.dart';
 
 class RegeringScreen extends StatefulWidget {
   @override
@@ -88,6 +90,19 @@ class RegeringScreenState extends State<RegeringScreen> {
                       fontSize: size.width * 0.025,
                       fontWeight: FontWeight.bold,
                       color: Colors.grey[800],
+                    ),
+                  ),
+                  SizedBox(width: size.width * .40),
+                  FlatButton(
+                    onPressed: () {
+                      context.read<FirebaseAuthService>().signOut();
+                    },
+                    child: Text(
+                      'Uitloggen',
+                      style: TextStyle(
+                        color: Colors.grey[800],
+                        fontSize: size.width * .01,
+                      ),
                     ),
                   ),
                 ],
@@ -333,7 +348,7 @@ class RegeringScreenState extends State<RegeringScreen> {
                         curve: Curves.bounceInOut,
                         duration: Duration(milliseconds: 150),
                         width: showContent ? size.width * .30 : 0,
-                        height: showContent ? size.height * .805 : 0,
+                        height: showContent ? size.height * .80 : 0,
                         color: Colors.grey[50],
                         child: Padding(
                           padding: EdgeInsets.only(
