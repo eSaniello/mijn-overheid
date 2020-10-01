@@ -295,17 +295,6 @@ class RegeringScreenState extends State<RegeringScreen> {
                                       horizontal: size.width * .005,
                                     ),
                                     child: InkWell(
-                                      onHover: (m) {
-                                        if (m) {
-                                          setState(() {
-                                            itemHeight = size.height * .30;
-                                          });
-                                        } else {
-                                          setState(() {
-                                            itemHeight = size.height * .25;
-                                          });
-                                        }
-                                      },
                                       splashColor: Colors.red,
                                       borderRadius: BorderRadius.circular(25),
                                       hoverColor: Colors.white12,

@@ -89,7 +89,6 @@ class _NewsItemState extends State<NewsItem> {
                     fit: BoxFit.fitHeight,
                     imageUrl: widget.img,
                     placeholder: (context, url) => Image.asset('su.png'),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
                 ),
               ),

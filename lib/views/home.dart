@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: Colors.grey[800],
                     ),
                   ),
-                  SizedBox(width: size.width * .40),
+                  SizedBox(width: size.width * .35),
                   FlatButton(
                     onPressed: () {
                       context.read<FirebaseAuthService>().signOut();
@@ -298,17 +298,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       horizontal: size.width * .005,
                                     ),
                                     child: InkWell(
-                                      onHover: (m) {
-                                        if (m) {
-                                          setState(() {
-                                            itemHeight = size.height * .30;
-                                          });
-                                        } else {
-                                          setState(() {
-                                            itemHeight = size.height * .25;
-                                          });
-                                        }
-                                      },
                                       splashColor: Colors.red,
                                       borderRadius: BorderRadius.circular(25),
                                       hoverColor: Colors.white12,
